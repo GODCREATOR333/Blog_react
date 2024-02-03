@@ -1,3 +1,4 @@
+import "./index.css"
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
@@ -7,8 +8,9 @@ import Home from './pages/Home'
 import PostDetail from './pages/PostDetail'
 import CreatePost from './pages/CreatePost'
 import EditPost from './pages/EditPost';
-
-
+import About from './pages/About'
+import Contact from './pages/Contact'
+import AllPosts from './pages/AllPosts'
 
 
 const router = createBrowserRouter([
@@ -20,7 +22,10 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "post/:id", element: <PostDetail /> },
       { path: "create", element: <CreatePost /> },
-      { path: "post/:id/edit", element: <EditPost /> }
+      { path: "post/:id/edit", element: <EditPost /> },
+      { path: "about", element: <About /> },
+      { path: "contact", element: <Contact /> },
+      { path: "allposts", element: <AllPosts /> }
 
     ]
   }
