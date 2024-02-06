@@ -133,7 +133,13 @@ body{
     color: var(--color-white);
 }
 
-
+.center{
+    text-align: center;
+    padding-top: 5rem;
+    margin-inline: center;
+    display: block;
+    width: 100%;
+}
 
 
  
@@ -225,3 +231,19 @@ footer{
     font-weight: 500;
 
 }
+
+/* ============ ERROR PAGE ============ */
+
+.center img {
+    display: block;
+    margin: auto; 
+}
+
+.center a{
+    margin-top: 2rem;
+}
+
+/* =============== HOME PAGE ================== */
+
+
+

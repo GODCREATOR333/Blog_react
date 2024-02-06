@@ -1,8 +1,11 @@
 import React from 'react'
+import Posts from '../Components/Posts'
 
 function Home() {
     return (
-        <div>Home</div>
+        <div>
+            <Posts />
+        </div>
     )
 }
 
