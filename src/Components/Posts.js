@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import thumbnail1 from "../assets/images/thumbnail1.jpg"
+import PostsItem from './PostsItem'
 
 
 const Dummy_Post = [
     {
         id: '1',
-        thumbmail: thumbnail1,
+        thumbnail: thumbnail1,
         category: 'Maths',
         title: 'Some Stupid Title',
         desc: 'Whatever is iakkj ladkfn lan l nlandfl a lnanlk lnalkdn a nlkan lkdfn a '
@@ -13,7 +14,7 @@ const Dummy_Post = [
     },
     {
         id: '2',
-        thumbmail: thumbnail1,
+        thumbnail: thumbnail1,
         category: 'Maths',
         title: 'Some Stupid Title',
         desc: 'Whatever is iakkj ladkfn lan l nlandfl a lnanlk lnalkdn a nlkan lkdfn a '
@@ -21,7 +22,7 @@ const Dummy_Post = [
     },
     {
         id: '3',
-        thumbmail: thumbnail1,
+        thumbnail: thumbnail1,
         category: 'Maths',
         title: 'Some Stupid Title',
         desc: 'Whatever is iakkj ladkfn lan l nlandfl a lnanlk lnalkdn a nlkan lkdfn a '
@@ -29,7 +30,39 @@ const Dummy_Post = [
     },
     {
         id: '4',
-        thumbmail: thumbnail1,
+        thumbnail: thumbnail1,
+        category: 'Maths',
+        title: 'Some Stupid Title',
+        desc: 'Whatever is iakkj ladkfn lan l nlandfl a lnanlk lnalkdn a nlkan lkdfn a '
+
+    },
+    {
+        id: '5',
+        thumbnail: thumbnail1,
+        category: 'Maths',
+        title: 'Some Stupid Title',
+        desc: 'Whatever is iakkj ladkfn lan l nlandfl a lnanlk lnalkdn a nlkan lkdfn a '
+
+    },
+    {
+        id: '6',
+        thumbnail: thumbnail1,
+        category: 'Maths',
+        title: 'Some Stupid Title',
+        desc: 'Whatever is iakkj ladkfn lan l nlandfl a lnanlk lnalkdn a nlkan lkdfn a '
+
+    },
+    {
+        id: '7',
+        thumbnail: thumbnail1,
+        category: 'Maths',
+        title: 'Some Stupid Title',
+        desc: 'Whatever is iakkj ladkfn lan l nlandfl a lnanlk lnalkdn a nlkan lkdfn a '
+
+    },
+    {
+        id: '8',
+        thumbnail: thumbnail1,
         category: 'Maths',
         title: 'Some Stupid Title',
         desc: 'Whatever is iakkj ladkfn lan l nlandfl a lnanlk lnalkdn a nlkan lkdfn a '
@@ -46,11 +79,14 @@ function Posts() {
 
 
     return (
-        <section className='posts'>
 
+        <section className='posts'>
+            <div className='container post_container'>
             {
-                Posts.map(() => <PostsItem />)
+                post.map(({id,thumbnail,category,title,desc}) => <PostsItem  key={id} postID={id}
+                 thumbnail={thumbnail} category={category} title={title} description={desc}/>)
             }
+            </div>
         </section>
     )
 }

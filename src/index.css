@@ -244,6 +244,94 @@ footer{
 }
 
 /* =============== HOME PAGE ================== */
+/* +++++++++++ Home Page - POSTS ++++++++++++++ */
+
+.post_container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 4rem;
+}
+
+.post{
+    background: var(--color-white);
+    padding: 1rem;
+    border-radius:var(--radius-4);
+    padding-bottom: 2rem;
+    transition: var(--transition);
+    cursor: default;
+}
+
+.post:hover{
+    box-shadow: 0 1.5rem 2rem rbga(0,0,0,0.1);
+}
+
+.post thumbnail{
+    border-radius: var(--radius-3);
+    overflow: hidden;
+    height: 16rem;
+
+}
+
+.post_content{
+    margin-top: 1.5rem;
+    color: #0F0F0F;
+}
+
+.post_content h3{
+    margin: 1rem 0 0.rem;
+    color: #0c0c22;
+}
+
+.post_footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 2rem;
+}
+
+.post_footer a {
+    color: #0F0F0F;
+}
 
 
 
+
+/* =========================== POST DETAIL ====================================== */
+
+.post_detail{
+    width: var(--form-width);
+    background: var(--color-white);
+    margin-inline: auto;
+    padding: 2rem 0 ;
+    color: #0c0c22;
+}
+
+.post-detail_title{
+    color: #0F0F0F;
+}
+
+
+.post-detail_header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.post-details_buttons{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+
+.post-detail_thumbnail{
+    margin: 1rem 0;
+    height: fit-content;
+    max-height: 30rem;
+    overflow: hidden;
+}
+
+.post_detail p{
+    margin-bottom: 1rem;
+
+}
