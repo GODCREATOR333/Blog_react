@@ -11,6 +11,8 @@ import EditPost from './pages/EditPost';
 import About from './pages/About'
 import Contact from './pages/Contact'
 import AllPosts from './pages/AllPosts'
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
 
 
 const router = createBrowserRouter([
@@ -25,7 +27,9 @@ const router = createBrowserRouter([
       { path: "post/:id/edit", element: <EditPost /> },
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
-      { path: "allposts", element: <AllPosts /> }
+      { path: "allposts", element: <AllPosts /> },
+      { path: "register", element: <Register /> },
+      { path: "dashboard", element: <Dashboard /> }
 
     ]
   }
