@@ -389,6 +389,15 @@ input, select, textarea{
 }
 
 
+/* custom style for react quill*/
+
+.ql-editor{
+    overflow: scroll;
+    background: var(--color-gray-300);
+    height: 8rem;
+}
+
+
 
 /* ============== Dashboard ================ */
 
@@ -430,4 +439,128 @@ input, select, textarea{
 .dashboard_actions{
     display: flex;
     gap: 1rem;
+}
+
+
+
+
+
+/* ================= Media Queries ============================ */
+
+@media screen and (max-width:800px) {
+
+    h1{
+        font-size: 1.7rem;
+    }
+
+    h2{
+        font-size: 1.4rem;
+    }
+
+    h3{
+        font-size: 1.2rem;
+    }
+
+    .container{
+        width: var(--container-width-md);
+    }
+
+    
+
+    /*Navbar*/
+
+    .nav__container{
+        position: relative;
+    }
+
+    .nav_menu{
+        position: absolute;
+        top: 5rem;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .nav_menu li{
+        width: 100%;
+        box-shadow: -2rem 4rem 4rem rgba(0, 0, 0, 0.26);
+        animation: dropdown 500ms ease forwards;
+        opacity: 0;
+        transform: rotateX(90deg);
+        transform-origin: top;
+    } 
+
+    @keyframes dropdown {
+        to {
+            opacity: 1;
+            transform: rotateX(0);
+        }
+    }
+
+
+
+    .nav_menu li a {
+        display: block;
+        background: var(--color-red);
+        padding: 0.85rem 2.5rem;
+    }
+
+    .nav_toggle-btn{
+        display: inline-block;
+        background: transparent;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #00aaff;
+    }
+
+
+
+
+    .post_container{
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+
+    .footer__categories{
+        flex-direction: column;
+    }
+
+    .post_detail{
+        width: 100%;
+        background: transparent;
+        padding: 0;
+    }
+
+
+    .register, .login ,.create-post{
+        width: 100%;
+    }
+
+
+    .post_detail h1 {
+        margin-top: 1rem;
+    }
+    
+    
+    .form {
+        margin-top: 2.5rem;
+        width: 100%;
+    }
+
+
+    .dashboard_post{
+        flex-direction: column;
+
+    }
+
+    .dashboard_info{
+        gap: 1.5rem;
+    }
+
+    .dashboard_thumbnail{
+        width: 5rem;
+    }
+
+
 }
