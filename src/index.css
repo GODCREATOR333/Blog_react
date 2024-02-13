@@ -442,6 +442,31 @@ input, select, textarea{
 }
 
 
+/* =================================  Home Screen ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+.hero{
+    height: 70vh;
+    background: #F72798;
+    color: #0F0F0F;
+}
+
+.hero h1{
+    font-family: 'Times New Roman', Times, serif;
+    color: #0F0F0F;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
