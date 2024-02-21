@@ -21,6 +21,7 @@
     --transition : all 300ms ease;
     --container-width-lg:84%;
     --container-width-md:92%;
+    --container-width-home:55%;
     --form-width:50%;
 
 
@@ -449,16 +450,36 @@ input, select, textarea{
 
 /* =================================  Home Screen ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
-.hero{
+.hero {
+    display: flex; /* Use flexbox to align items horizontally */
     height: 70vh;
-    background: #F72798;
+}
+
+.left-side-info {
+    flex: 0 0 60%;
+    background-color: #F9F7F7;
     color: #0F0F0F;
 }
 
-.hero h1{
-    font-family: 'Times New Roman', Times, serif;
+.gifs{
+    height: 5rem;
+    width: 5rem;
+}
+
+.hero_text h1,h2,h3{
     color: #0F0F0F;
 }
+
+.right-side-img {
+    flex: 1;
+    background-image:url(https://i.redd.it/zbuh5mavuw2a1.jpg);
+    background-repeat: no-repeat;
+    display: contain;
+    background-position: center;
+}
+
+
+
 
 
 
@@ -553,7 +574,9 @@ input, select, textarea{
 
 
     .footer__categories{
-        flex-direction: column;
+        display:grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
     }
 
     .post_detail{
@@ -592,5 +615,23 @@ input, select, textarea{
         width: 5rem;
     }
 
+
+    /* ==============HOME ++++++++++++++++++++++++++++ */
+
+    .hero {
+        display: flex; /* Use flexbox to align items horizontally */
+        height: 40vh;
+    }
+    
+
+    .left-side-info {
+        flex: 0 0 100%;
+        background-color: #7be9f5;
+    }
+
+    .right-side-img{
+        display: none;
+        
+    }
 
 }

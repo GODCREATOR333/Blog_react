@@ -1,8 +1,17 @@
 import React from 'react'
+import Posts from '../Components/Posts'
 
 function AllPosts() {
     return (
-        <div>AllPosts</div>
+        <section>
+            <div className='sorter'>
+
+            </div>
+
+            
+            <Posts/>
+        </section>
+        
     )
 }
 

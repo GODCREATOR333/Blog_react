@@ -6,6 +6,7 @@ function Footer() {
     <footer>
       <ul className='footer__categories'>
         <li><Link to='posts/categories/coding'>Coding</Link></li>
+        <li><Link to='posts/categories/engineering'>Engineering</Link></li>
         <li><Link to='posts/categories/maths'>Maths</Link></li>
         <li><Link to='posts/categories/physics'>Physics</Link></li>
         <li><Link to='posts/categories/literature'>Literature</Link></li>
