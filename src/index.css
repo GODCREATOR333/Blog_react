@@ -282,6 +282,11 @@ footer{
     color: #0c0c22;
 }
 
+.time-stamp h5{
+    color: var(--color-gray-500);
+    margin-top: 0.25rem;
+}
+
 .post_footer{
     display: flex;
     justify-content: space-between;
