@@ -1,5 +1,5 @@
 import React from 'react'
-import Latest_Posts from '../Components/Latest_posts'
+import Latest_Posts from '../Components/Latest_Posts'
 import coding_gif from '../assets/gifs/coding.gif'
 
 function Home() {
@@ -38,7 +38,7 @@ function Home() {
                         <p className='hero_text hero__p'> Check out my Portifolio website here @ </p>
                         
                         <div className='buttons'>
-                            <a href="" target="_blank" rel="noopener noreferrer">
+                            <a href="https://haripreetham-portifolio.web.app/" target="_blank" rel="noopener noreferrer">
                                 <button className='button_hero'>Portifolio<span style={{ fontSize: '18px' }}> ↗ </span></button>
                             </a>
                         </div>

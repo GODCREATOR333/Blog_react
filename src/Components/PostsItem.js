@@ -25,7 +25,7 @@ function PostsItem({ postID, thumbnail, category, title, description }) {
 
         <div className='post_content'>
 
-          <Link to={`/ posts / ${postID}`}>
+          <Link to={`/posts/${postID}`}>
             <h3>{shorttitle}</h3>
           </Link>
 
@@ -36,7 +36,7 @@ function PostsItem({ postID, thumbnail, category, title, description }) {
           </div>
 
           <div className='post_footer'>
-            <Link to={`/ post / categories / ${category} `} className='btn category '> {category} </Link>
+            <Link to={`/post/categories/${category} `} className='btn category '> {category} </Link>
           </div>
 
         </div>

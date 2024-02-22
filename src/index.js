@@ -2,6 +2,7 @@ import "./index.css"
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import ScrollToTop from './ScrollToTop';
 import Layout from './Components/Layout';
 import Errorpage from './pages/Errorpage';
 import Home from './pages/Home'
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     errorElement: <Errorpage />,
     children: [
+      <ScrollToTop />,
       { index: true, element: <Home /> },
       { path: "posts/:id", element: <PostDetail /> },
       { path: "create", element: <CreatePost /> },
@@ -39,7 +41,8 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider router={router}>
+      {router}
+    </RouterProvider>
   </React.StrictMode>
 );
-
