@@ -575,6 +575,7 @@ input, select, textarea{
 .logos img {
     width: auto;
     height: 3rem;
+    margin-left: 5rem;
 }
 
 .about{

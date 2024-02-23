@@ -13,7 +13,7 @@ import tensorflow_logo from '../assets/logos/tensorflow.svg';
 import opencv_logo from '../assets/logos/opencv.svg';
 import linux_logo from '../assets/logos/linux.svg';
 import autodesk_logo from '../assets/logos/autodesk.svg';
-import ansys_logo from '../assets/logos/ansys.svg';
+import ansys_logo from '../assets/logos/ansys.png';
 import adobe_logo from '../assets/logos/adobe.svg';
 import solidworks_logo from '../assets/logos/solidworks.svg';
 import unreal_logo from '../assets/logos/unreal.svg'

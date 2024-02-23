@@ -145,7 +145,7 @@ function Contact() {
                                             </div>
                                         </div>
 
-                                        <button className='submit-btn' type='submit'>
+                                        <button className='submit-btn' type='submit' onSubmit={handleSubmit(onSubmit)}>
                                             Submit
                                         </button>
                                         
