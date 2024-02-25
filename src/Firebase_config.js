@@ -1,7 +1,3 @@
-import firebase from 'firebase/app';
-import 'firebase/database';
-
-
 const firebaseConfig = {
     apiKey: "AIzaSyAe-AnziwGvflAyXz_EBHvr7nMEM3fC85c",
     authDomain: "scientia-blog.firebaseapp.com",
@@ -12,6 +8,5 @@ const firebaseConfig = {
     appId: "1:37618701406:web:0645397458ce6345b010cf"
 };
 
-firebase.initializeApp(firebaseConfig);
 
-export default firebaseConfig;
+export default firebaseConfig

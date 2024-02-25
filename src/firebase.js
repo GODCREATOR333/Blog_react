@@ -22,6 +22,3 @@ const analytics = getAnalytics(app);
 
 
 logEvent(analytics, 'page_view');
-
-
-export default app

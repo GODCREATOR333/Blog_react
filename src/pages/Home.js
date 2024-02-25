@@ -1,7 +1,6 @@
 import React from 'react'
 import Latest_Posts from '../Components/Latest_Posts'
 import coding_gif from '../assets/gifs/coding.gif'
-import blog_img from '../assets/logos/blog.png'
 
 function Home() {
     return (
@@ -59,11 +58,6 @@ function Home() {
 
 
             </section>
-
-            <div className=' container recent_posts' >
-                <div> <h5> Recent Posts </h5> </div>
-                <div> <img  className='blog_img' src={blog_img} alt='blog_img'/> </div>
-            </div>
 
 
 
