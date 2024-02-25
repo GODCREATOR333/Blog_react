@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import {v4} from 'uuid'
 import 'react-quill/dist/quill.snow.css';
-import { getDatabase, ref, push,serverTimestamp,set,child,get } from 'firebase/database';
+import { getDatabase, ref, push,serverTimestamp,set,child,get,update,savePostData} from 'firebase/database';
 import app from '../firebase';
 import storage from '../firebase'
-import {  getStorage,ref as storageRef , uploadBytes} from "firebase/storage";
+import {  getStorage,ref as storageRef , uploadBytes,getDownloadURL} from "firebase/storage";
 
 
 
@@ -52,60 +52,24 @@ function CreatePost() {
         // Clear any previous error message
         setMessage('');
 
-        const postData = {
-            title,
-            category,
-            description,
-            postcontent,
-            thumbnail: thumbnail ? thumbnail.name : '',
-            timestamp: serverTimestamp(),
-        };
-
-       
-
-        const uploadImage = async () => {
-
-            const storage = getStorage(app);
-
-
-            if  (thumbnail == null) return;
-            const imageRef = storageRef(storage,`images/${thumbnail.name + v4()}`);
-            try {
-                await uploadBytes(imageRef, thumbnail);
-              } catch (error) {
-                console.error('Error uploading image', error);
-              }
-        };
-        
-
-
-
-        const db = getDatabase(app);
-
-
         try {
-            // Push the new post to Firebase and get the auto-generated ID
-            const newPostRef = push(ref(db, 'posts'));
-            const newPostKey = newPostRef.key;
-    
-            // Get the current count of posts
-            const postsRef = ref(db, 'posts_count');
-            const snapshot = await get(postsRef);
-            let count = 1;
-            if (snapshot.exists()) {
-                count = snapshot.val() + 1;
-            }
-    
-            // Update the count of posts
-            await set(postsRef, count);
-    
-            // Add the incremental ID to the post data
-            postData.id = count;
-    
-            // Save the post data under the auto-generated ID
-            await set(child(ref(db, 'posts'), newPostKey), postData);
-    
-            await uploadImage();
+            // Upload image
+            const imageUrl = await uploadImage();
+
+            // Construct post data with image URL
+            const postData = {
+                title,
+                category,
+                description,
+                postcontent,
+                thumbnail: thumbnail ? thumbnail.name : '',
+                thumbnailUrl: imageUrl, // Add image URL to post data
+                timestamp: serverTimestamp(),
+            };
+
+            // Save post data to real-time database
+            await savePostData(postData);
+
             setMessage('Post successfully added!');
             // Clear form fields
             setTitle('');
@@ -114,10 +78,49 @@ function CreatePost() {
             setThumbnail('');
             setPostContent('');
         } catch (error) {
-            console.error('Error adding post to the database:', error);
+            console.error('Error adding post:', error);
             setMessage('Failed to add post. Please try again.');
         }
     };
+
+    const uploadImage = async () => {
+        if (!thumbnail) return ''; // If no image, return empty string
+
+        const storage = getStorage(app);
+        const imageRef = storageRef(storage, `images/${thumbnail.name + v4()}`);
+
+        try {
+            await uploadBytes(imageRef, thumbnail);
+            return await getDownloadURL(imageRef); // Return the download URL of the uploaded image
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            throw error; // Rethrow error to be caught in handleSubmit
+        }
+    };
+
+    const savePostData = async (postData) => {
+        const db = getDatabase(app);
+        const newPostRef = push(ref(db, 'posts'));
+        
+        // Get the current count of posts
+        const postsCountRef = ref(db, 'posts_count');
+        const snapshot = await get(postsCountRef);
+        let count = 1;
+        if (snapshot.exists()) {
+            count = snapshot.val() + 1;
+        }
+
+        // Update the count of posts
+        await set(postsCountRef, count);
+
+        // Add the incremental ID to the post data
+        postData.id = count;
+
+        // Save the post data under the auto-generated ID
+        await set(newPostRef, postData);
+    };
+
+    
 
     return (
         <section className='create-post'>
