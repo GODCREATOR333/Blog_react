@@ -84,20 +84,26 @@ function CreatePost() {
 
 
         try {
+            // Push the new post to Firebase and get the auto-generated ID
+            const newPostRef = push(ref(db, 'posts'));
+            const newPostKey = newPostRef.key;
+    
             // Get the current count of posts
-            const postsRef = ref(db, 'posts');
-            const snapshot = await get(child(postsRef, 'count'));
+            const postsRef = ref(db, 'posts_count');
+            const snapshot = await get(postsRef);
             let count = 1;
             if (snapshot.exists()) {
                 count = snapshot.val() + 1;
             }
     
-            // Push the new post with the incremented count as ID
-            const newPostRef = child(ref(db, 'posts'), String(count));
-            await set(newPostRef, postData);
-    
             // Update the count of posts
-            await set(child(postsRef, 'count'), count);
+            await set(postsRef, count);
+    
+            // Add the incremental ID to the post data
+            postData.id = count;
+    
+            // Save the post data under the auto-generated ID
+            await set(child(ref(db, 'posts'), newPostKey), postData);
     
             await uploadImage();
             setMessage('Post successfully added!');

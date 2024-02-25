@@ -387,7 +387,7 @@ input, select, textarea{
 }
 
 .register h2 , .login h2 , .create-post h2{
-    margin-bottom: 10rem;
+    margin-bottom: 5rem;
 }
 
 
@@ -403,6 +403,11 @@ input, select, textarea{
 
 
 /* custom style for react quill*/
+
+
+.create-post-form{
+    margin-bottom: 8rem;
+}
 
 .ql-editor{
     overflow: scroll;
