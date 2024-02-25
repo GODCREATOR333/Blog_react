@@ -1,6 +1,5 @@
 import React from 'react'
 import Latest_Posts from '../Components/Latest_Posts'
-import coding_gif from '../assets/gifs/coding.gif'
 
 function Home() {
     return (
@@ -9,22 +8,6 @@ function Home() {
 
                 <div className='left-side-info'>
                     
-                    {/* <img className='gifs coding_gif' 
-                            src={coding_gif}
-                            alt='coding_gif'/>
-                
-                    <img className='gifs coding_gif' 
-                            src={coding_gif}
-                            alt='coding_gif'/>
-
-                    <img className='gifs coding_gif' 
-                            src={coding_gif}
-                            alt='coding_gif'/>
-
-                    <img className='gifs coding_gif' 
-                            src={coding_gif}
-                            alt='coding_gif'/> */}
-
                     <div className='container-home '>
                         <h1  className='hero_text hero__h1' > Welcome!</h1>
                         <h2 className='hero_text hero__h2'> This is my personal blog</h2>

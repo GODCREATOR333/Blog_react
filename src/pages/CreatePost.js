@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
+import {v4} from 'uuid'
 import 'react-quill/dist/quill.snow.css';
-import axios from 'axios';
-import { getDatabase, ref, push } from 'firebase/database';
+import { getDatabase, ref, push,serverTimestamp,set,child,get } from 'firebase/database';
 import app from '../firebase';
+import storage from '../firebase'
+import {  getStorage,ref as storageRef , uploadBytes} from "firebase/storage";
+
+
 
 function CreatePost() {
     const [title, setTitle] = useState('');
@@ -54,11 +58,48 @@ function CreatePost() {
             description,
             postcontent,
             thumbnail: thumbnail ? thumbnail.name : '',
+            timestamp: serverTimestamp(),
         };
 
+       
+
+        const uploadImage = async () => {
+
+            const storage = getStorage(app);
+
+
+            if  (thumbnail == null) return;
+            const imageRef = storageRef(storage,`images/${thumbnail.name + v4()}`);
+            try {
+                await uploadBytes(imageRef, thumbnail);
+              } catch (error) {
+                console.error('Error uploading image', error);
+              }
+        };
+        
+
+
+
         const db = getDatabase(app);
+
+
         try {
-            await push(ref(db, 'posts'), postData);
+            // Get the current count of posts
+            const postsRef = ref(db, 'posts');
+            const snapshot = await get(child(postsRef, 'count'));
+            let count = 1;
+            if (snapshot.exists()) {
+                count = snapshot.val() + 1;
+            }
+    
+            // Push the new post with the incremented count as ID
+            const newPostRef = child(ref(db, 'posts'), String(count));
+            await set(newPostRef, postData);
+    
+            // Update the count of posts
+            await set(child(postsRef, 'count'), count);
+    
+            await uploadImage();
             setMessage('Post successfully added!');
             // Clear form fields
             setTitle('');
@@ -84,7 +125,7 @@ function CreatePost() {
                     </select>
                     <input type='text' placeholder='Description' value={description} onChange={e => setDescription(e.target.value)} autoFocus />
                     <ReactQuill className='custom-quill' modules={modules} formats={formats} value={postcontent} onChange={setPostContent} />
-                    <input key={thumbnail}className='attach' type='file' onChange={e => setThumbnail(e.target.files[0])} accept='png,jpg,jpeg' />
+                    <input key={thumbnail} className='attach' type='file' onChange={e => setThumbnail(e.target.files[0])} accept='png,jpg,jpeg' />
                     <button type='submit' className='btn primary'>Create</button>
                 </form>
             </div>
