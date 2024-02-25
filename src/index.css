@@ -387,7 +387,7 @@ input, select, textarea{
 }
 
 .register h2 , .login h2 , .create-post h2{
-    margin-bottom: 2rem;
+    margin-bottom: 10rem;
 }
 
 
@@ -410,6 +410,14 @@ input, select, textarea{
     height: 8rem;
 }
 
+.custom-quill{
+    height: 25rem;
+}
+
+
+.attach{
+    margin-top: 3rem;
+}
 
 
 /* ============== Dashboard ================ */
