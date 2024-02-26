@@ -5,9 +5,6 @@ import 'react-quill/dist/quill.snow.css';
 import { getDatabase, ref, push,serverTimestamp,set,get} from 'firebase/database';
 import app from '../firebase'
 import {  getStorage,ref as storageRef , uploadBytes,getDownloadURL} from "firebase/storage";
-import { useDispatch, useSelector } from 'react-redux';
-import { addFirebaseID } from '../firebaseActions';
-
 
 
 function CreatePost() {
@@ -17,20 +14,6 @@ function CreatePost() {
     const [postcontent, setPostContent] = useState('');
     const [thumbnail, setThumbnail] = useState('');
     const [message, setMessage] = useState('');
-    const [uniqueID,setUniqueID] = useState('')
-    const [submitted, setSubmitted] = useState(false);
-    
-
-    //Redux state Management
-    const dispatch = useDispatch();
-    const firebaseIDs = useSelector((state) => state.firebaseIDs);
-
-    useEffect(() => {
-        console.log(firebaseIDs);
-    }, [firebaseIDs]);
-
-
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -59,7 +42,6 @@ function CreatePost() {
 
             // Save post data to real-time database
             await savePostData(postData);
-            setSubmitted(true);
 
             setMessage('Post successfully added!');
             // Clear form fields
@@ -91,37 +73,24 @@ function CreatePost() {
 
     const savePostData = async (postData) => {
         const db = getDatabase(app);
-        const newPostRef = push(ref(db, 'posts'));
-
-        setUniqueID(newPostRef.key);
-
-        // Get the current count of posts
-        const postsCountRef = ref(db, 'posts_count');
-        const snapshot = await get(postsCountRef);
-        let count = 1;
-        if (snapshot.exists()) {
-            count = snapshot.val() + 1;
-        }
-
-        // Update the count of posts
-        await set(postsCountRef, count);
-
-        // Add the incremental ID to the post data
-        postData.id = count;
-
-        // Save the post data under the auto-generated ID
-        await set(newPostRef, postData);
-
-        
-    };
-
-    useEffect(() => {
-        if (submitted && uniqueID !== '') {
-          dispatch(addFirebaseID(uniqueID));
-        }
-      }, [dispatch, submitted, uniqueID]);
     
-
+        // Get a reference to the 'posts' node
+        const postsRef = ref(db, 'posts');
+    
+        // Get a snapshot of the current posts
+        const postsSnapshot = await get(postsRef);
+    
+        // Calculate the count of posts
+        let count = 1; // Start from 1 if there are no posts
+        if (postsSnapshot.exists()) {
+            count = Object.keys(postsSnapshot.val()).length + 1; // Count existing posts
+        }
+    
+        // Set the post data under the specific postID node
+        await set(ref(db, `posts/${count}`), postData);
+    };
+    
+    
 
     const POST_CATEGORIES = ['Economics', 'Maths', 'Physics', 'Coding', 'Engineering', 'Literature'];
 
