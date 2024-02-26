@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getDatabase, ref } from 'firebase/database';
-import  app  from '../firebase';
-import 'firebase/database';
-
+import { getDatabase, ref, get } from 'firebase/database'; // Import get function
+import app from '../firebase';
 
 function PostsItem({ postID }) {
   const [post, setPost] = useState(null);
+
   useEffect(() => {
     const fetchPost = async () => {
-      // Assuming you have initialized Firebase app elsewhere
-      const db = getDatabase(app);
-      const postRef = ref('posts').child(postID);
+      try {
+        const db = getDatabase(app);
+        const postRef = ref(db, `posts/${postID}`);
+        const postSnapshot = await get(postRef); // Use get function to fetch data
 
-      // Fetch post data
-      postRef.once('value', (snapshot) => {
-        const postData = snapshot.val();
-        setPost(postData);
-      });
+        if (postSnapshot.exists()) {
+          setPost(postSnapshot.val());
+        } else {
+          console.log('No data available');
+        }
+      } catch (error) {
+        console.error('Error fetching post:', error);
+      }
     };
 
     fetchPost();
@@ -27,7 +30,7 @@ function PostsItem({ postID }) {
     return <div>Loading...</div>;
   }
 
-  const { thumbnail, category, title, description, timestamp, author } = post;
+  const { thumbnailUrl, category, title, description, timestamp } = post; // Ensure your data keys match here
 
   const shortDescription =
     description.length > 150 ? description.substring(0, 150) + '...' : description;
@@ -37,7 +40,7 @@ function PostsItem({ postID }) {
     <div>
       <article className="post">
         <div className="post_thumbnail">
-          <img src={thumbnail} alt={title} />
+          <img src={thumbnailUrl} alt={title} /> {/* Ensure to use the correct key for thumbnail URL */}
         </div>
 
         <div className="post_content">
@@ -48,7 +51,7 @@ function PostsItem({ postID }) {
           <p>{shortDescription}</p>
 
           <div className="time-stamp">
-            <h5>{`${timestamp} - by ${author}`}</h5>
+            <h5>{`${timestamp} - by Author Name`}</h5> {/* Replace 'Author Name' with actual author */}
           </div>
 
           <div className="post_footer">
