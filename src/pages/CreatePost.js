@@ -108,11 +108,17 @@ function CreatePost() {
     };
 
     useEffect(() => {
-        if (submitted && uniqueID !== '') { // Changed uniqueID !== null to uniqueID !== ''
+        if (submitted && uniqueID !== '') {
+            // Use the functional form of setFirebaseIDs to ensure
+            // that you're working with the latest state value
             setFirebaseIDs(prevFirebaseIDs => [...prevFirebaseIDs, uniqueID]);
-            console.log(firebaseIDs)
         }
     }, [submitted, uniqueID]);
+    
+    // Log the updated firebaseIDs whenever it changes
+    useEffect(() => {
+        console.log(firebaseIDs);
+    }, [firebaseIDs]);
     
 
 
