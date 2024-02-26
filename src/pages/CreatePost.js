@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import ReactQuill from 'react-quill';
 import {v4} from 'uuid'
 import 'react-quill/dist/quill.snow.css';
@@ -15,35 +15,12 @@ function CreatePost() {
     const [postcontent, setPostContent] = useState('');
     const [thumbnail, setThumbnail] = useState('');
     const [message, setMessage] = useState('');
-
-    const POST_CATEGORIES = ['Economics', 'Maths', 'Physics', 'Coding', 'Engineering', 'Literature'];
-
-    const modules = {
-        toolbar: [
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-            ['link', 'image'],
-            ['code-block', { 'script': 'sub' }],
-            [{ 'copy-code': 'Copy Code' }],
-            ['clean']
-        ],
-        clipboard: {
-            matchVisual: false,
-        }
-    };
-
-    const formats = [
-        'header',
-        'bold', 'italic', 'underline', 'strike', 'blockquote',
-        'list', 'bullet', 'indent',
-        'link', 'image',
-        'code-block'
-    ];
+    const [uniqueID,setUniqueID] = useState('')
+    const [submitted, setSubmitted] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (title.trim() === '' || description.trim() === '') {
+        if (title.trim() === '' || description.trim() === '' || thumbnail === '') {
             setMessage('Please fill out all required fields.');
             return;
         }
@@ -68,6 +45,7 @@ function CreatePost() {
 
             // Save post data to real-time database
             await savePostData(postData);
+            setSubmitted(true);
 
             setMessage('Post successfully added!');
             // Clear form fields
@@ -100,7 +78,9 @@ function CreatePost() {
     const savePostData = async (postData) => {
         const db = getDatabase(app);
         const newPostRef = push(ref(db, 'posts'));
-        
+
+        setUniqueID(newPostRef.key);
+
         // Get the current count of posts
         const postsCountRef = ref(db, 'posts_count');
         const snapshot = await get(postsCountRef);
@@ -117,9 +97,46 @@ function CreatePost() {
 
         // Save the post data under the auto-generated ID
         await set(newPostRef, postData);
+
+        
     };
 
-    
+    useEffect(() => {
+        if (submitted && uniqueID !== null) {
+            console.log(`UniqueId = ${uniqueID}`);
+        }
+    }, [submitted, uniqueID]);
+
+
+    const POST_CATEGORIES = ['Economics', 'Maths', 'Physics', 'Coding', 'Engineering', 'Literature'];
+
+    const modules = {
+        toolbar: [
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image'],
+            ['code-block', { 'script': 'sub' }],
+            [{ 'copy-code': 'Copy Code' }],
+            ['clean']
+        ],
+        clipboard: {
+            matchVisual: false,
+        }
+    };
+
+    const formats = [
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link', 'image',
+        'code-block'
+    ];
+
+
+
+
+
 
     return (
         <section className='create-post'>
@@ -128,7 +145,7 @@ function CreatePost() {
                 {message && <p className='form_error_message'>{message}</p>}
                 <form className='form create-post-form' onSubmit={handleSubmit}>
                     <input type='text' placeholder='Title' value={title} onChange={e => setTitle(e.target.value)} autoFocus />
-                    <select name='Category' value={category} onChange={e => setCategory(e.target.value)}>
+                    <select name='Category' value={category}  defaultValue={POST_CATEGORIES[0]}onChange={e => setCategory(e.target.value)}>
                         {POST_CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
                     </select>
                     <input type='text' placeholder='Description' value={description} onChange={e => setDescription(e.target.value)} autoFocus />
