@@ -14,6 +14,10 @@ import Contact from './pages/Contact'
 import AllPosts from './pages/AllPosts'
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import { Provider } from 'react-redux'; // Import Provider from react-redux
+import { createStore } from 'redux'; // Import createStore from Redux
+import rootReducer from './rootReducer'; // Import your root reducer
+
 
 
 const router = createBrowserRouter([
@@ -37,12 +41,17 @@ const router = createBrowserRouter([
   }
 ])
 
+// Create the Redux store
+const store = createStore(rootReducer);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}>
-      {router}
-    </RouterProvider>
+    {/* Wrap your RouterProvider and all its children with the Redux Provider */}
+    <Provider store={store}>
+      <RouterProvider router={router}>
+        {router}
+      </RouterProvider>
+    </Provider>
   </React.StrictMode>
 );

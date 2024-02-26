@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { getDatabase, ref } from 'firebase/database';
 import  app  from '../firebase';
 import 'firebase/database';
+import firebaseIDs from '../pages/CreatePost'
 
-function PostsItem({ postID }) {
+function PostsItem({ postID,firebaseIDs }) {
   const [post, setPost] = useState(null);
+  console.log(firebaseIDs)
 
   useEffect(() => {
     const fetchPost = async () => {

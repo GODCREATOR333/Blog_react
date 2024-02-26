@@ -5,6 +5,8 @@ import 'react-quill/dist/quill.snow.css';
 import { getDatabase, ref, push,serverTimestamp,set,get} from 'firebase/database';
 import app from '../firebase'
 import {  getStorage,ref as storageRef , uploadBytes,getDownloadURL} from "firebase/storage";
+import { useDispatch, useSelector } from 'react-redux';
+import { addFirebaseID } from '../firebaseActions';
 
 
 
@@ -17,16 +19,22 @@ function CreatePost() {
     const [message, setMessage] = useState('');
     const [uniqueID,setUniqueID] = useState('')
     const [submitted, setSubmitted] = useState(false);
-    const [firebaseIDs,setFirebaseIDs] = useState([])
+    
 
+    //Redux state Management
+    const dispatch = useDispatch();
+    const firebaseIDs = useSelector((state) => state.firebaseIDs);
 
+    useEffect(() => {
+        console.log(firebaseIDs);
+    }, [firebaseIDs]);
 
 
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (title.trim() === '' || description.trim() === '' || thumbnail === '') {
+        if (title.trim() === '' || description.trim() === '' ) {
             setMessage('Please fill out all required fields.');
             return;
         }
@@ -109,16 +117,9 @@ function CreatePost() {
 
     useEffect(() => {
         if (submitted && uniqueID !== '') {
-            // Use the functional form of setFirebaseIDs to ensure
-            // that you're working with the latest state value
-            setFirebaseIDs(prevFirebaseIDs => [...prevFirebaseIDs, uniqueID]);
+          dispatch(addFirebaseID(uniqueID));
         }
-    }, [submitted, uniqueID]);
-    
-    // Log the updated firebaseIDs whenever it changes
-    useEffect(() => {
-        console.log(firebaseIDs);
-    }, [firebaseIDs]);
+      }, [dispatch, submitted, uniqueID]);
     
 
 
