@@ -17,6 +17,12 @@ function CreatePost() {
     const [message, setMessage] = useState('');
     const [uniqueID,setUniqueID] = useState('')
     const [submitted, setSubmitted] = useState(false);
+    const [firebaseIDs,setFirebaseIDs] = useState([])
+
+
+
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -102,10 +108,12 @@ function CreatePost() {
     };
 
     useEffect(() => {
-        if (submitted && uniqueID !== null) {
-            console.log(`UniqueId = ${uniqueID}`);
+        if (submitted && uniqueID !== '') { // Changed uniqueID !== null to uniqueID !== ''
+            setFirebaseIDs(prevFirebaseIDs => [...prevFirebaseIDs, uniqueID]);
+            console.log(firebaseIDs)
         }
     }, [submitted, uniqueID]);
+    
 
 
     const POST_CATEGORIES = ['Economics', 'Maths', 'Physics', 'Coding', 'Engineering', 'Literature'];
