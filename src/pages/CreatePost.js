@@ -2,16 +2,15 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import {v4} from 'uuid'
 import 'react-quill/dist/quill.snow.css';
-import { getDatabase, ref, push,serverTimestamp,set,child,get,update,savePostData} from 'firebase/database';
-import app from '../firebase';
-import storage from '../firebase'
+import { getDatabase, ref, push,serverTimestamp,set,get} from 'firebase/database';
+import app from '../firebase'
 import {  getStorage,ref as storageRef , uploadBytes,getDownloadURL} from "firebase/storage";
 
 
 
 function CreatePost() {
     const [title, setTitle] = useState('');
-    const [category, setCategory] = useState('uncategorized');
+    const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [postcontent, setPostContent] = useState('');
     const [thumbnail, setThumbnail] = useState('');
