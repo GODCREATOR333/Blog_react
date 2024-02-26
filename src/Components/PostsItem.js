@@ -19,10 +19,10 @@ function PostsItem({ postID }) {
         } else {
           console.log('No data available for postID:', postID);
         }
-        setLoading(false); // Set loading to false regardless of whether data exists or not
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching post:', error);
-        setLoading(false); // Set loading to false in case of error
+        setLoading(false);
       }
     };
 
@@ -58,7 +58,7 @@ function PostsItem({ postID }) {
           <p>{shortDescription}</p>
 
           <div className="time-stamp">
-            <h5>{`${timestamp} - by Author Name`}</h5>
+            <h5>{`${timestamp} - by Hari Preetham`}</h5>
           </div>
 
           <div className="post_footer">
