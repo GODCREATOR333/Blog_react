@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getDatabase, ref, get } from 'firebase/database';
 import app from '../firebase';
 
-function PostsItem() {
+function PostsItem({ sortOption }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -17,8 +17,20 @@ function PostsItem() {
             id,
             ...data,
           }));
-          setPosts(postsArray);
-          console.log(`Posts Array ${postsArray}`);
+
+          // Sort posts based on the selected option
+          let sortedPosts = [...postsArray];
+          if (sortOption === 'latest') {
+            sortedPosts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+          } else if (sortOption === 'oldest') {
+            sortedPosts.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+          } else if (sortOption === 'Alphabetically(A-Z)') {
+            sortedPosts.sort((a, b) => a.title.localeCompare(b.title));
+          } else if (sortOption === 'Alphabetically(Z-A)') {
+            sortedPosts.sort((a, b) => b.title.localeCompare(a.title));
+          }
+          
+          setPosts(sortedPosts);
         } else {
           console.log("No data available");
         }
@@ -28,19 +40,19 @@ function PostsItem() {
     };
 
     fetchData();
-  }, []);
+  }, [sortOption]);
 
   if (posts.length === 0) {
     return null; // or render a loading indicator
   }
 
   return (
-    <div className=' container posts post_container'>
+    <div className='container posts post_container'>
       {posts.map(post => {
-        // Shorten description to 30 characters and add "......" if longer
+        // Shorten description to 30 characters and add "..." if longer
         const shortDescription =
           post.description.length > 250
-            ? post.description.slice(0, 250) + "......"
+            ? post.description.slice(0, 250) + "..."
             : post.description;
 
         return (

@@ -29,7 +29,7 @@
     --container-width-lg:84%;
     --container-width-md:92%;
     --container-width-home:55%;
-    --form-width:50%;
+    --form-width:65%;
 
 
 
@@ -254,7 +254,6 @@ footer{
 /* =============== HOME PAGE ================== */
 /* +++++++++++ Home Page - POSTS ++++++++++++++ */
 
-
 .recent_Posts{
     display: flex;
     flex-direction: row;
@@ -325,6 +324,54 @@ footer{
 }
 
 
+/* =================================+ALL Posts +++++++++++++++++++++++++++++++++++++ */
+
+/* CSS for the sorter section */
+.sorter {
+  display: flex;
+  justify-content: right; /* Aligns the content to the right */
+  align-items: center; /* Centers items vertically */
+  margin-top: 8rem;
+  width: fit-content;
+  margin-right: 15rem;
+}
+
+.sorter label {
+  margin-right: 10px; /* Add some spacing between label and select */
+}
+
+/* CSS for the select dropdown */
+#sortPosts {
+  padding: 5px; /* Add padding for better appearance */
+  border-radius: 5px; /* Add border radius for rounded corners */
+  border: 1px solid #ccc; /* Add border for better visibility */
+  background-color: #fff; /* Set background color */
+  cursor: pointer; /* Change cursor on hover */
+  font-size: 16px; /* Set font size */
+}
+
+/* Optional: Style for select dropdown options */
+#sortPosts option {
+  background-color: #fff; /* Set background color */
+  color: #333; /* Set text color */
+  font-size: 16px; /* Set font size */
+}
+
+/* Optional: Style for select dropdown arrow */
+/* Note: This may vary based on the browser */
+#sortPosts::-ms-expand {
+  display: none; /* Hide the default arrow in Internet Explorer */
+}
+#sortPosts::after {
+  content: '\25BC'; /* Unicode for downward arrow */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+
+
 
 
 /* =========================== POST DETAIL ====================================== */
@@ -358,13 +405,18 @@ footer{
 .post-detail_thumbnail{
     margin: 1rem 0;
     height: fit-content;
-    max-height: 30rem;
+    max-height: 40rem;
     overflow: hidden;
 }
 
 .post_detail p{
     margin-bottom: 1rem;
 
+}
+
+.post-detail_header h2{
+    font-size: medium;
+    color: #0F0F0F;
 }
 
 
@@ -806,6 +858,7 @@ input, select, textarea{
 
     .nav__container{
         position: relative;
+        cursor: pointer;
     }
 
     .nav_menu{

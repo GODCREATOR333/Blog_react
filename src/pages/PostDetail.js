@@ -1,144 +1,58 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import thumbnail from "../assets/images/thumbnail1.jpg"
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { getDatabase, ref, get } from 'firebase/database';
+import app from '../firebase';
 
 function PostDetail() {
+    const { id } = useParams(); // Get the post ID from the URL
+    const [post, setPost] = useState(null);
+
+    useEffect(() => {
+        const fetchPost = async () => {
+            try {
+                const db = getDatabase(app);
+                const postRef = ref(db, `posts/${id}`);
+                const snapshot = await get(postRef);
+                if (snapshot.exists()) {
+                    setPost(snapshot.val());
+                } else {
+                    console.log("No post found");
+                }
+            } catch (error) {
+                console.error("Error fetching post:", error);
+            }
+        };
+
+        fetchPost();
+    }, [id]);
+
+    if (!post) {
+        return <div>Loading...</div>; // Or render a loading indicator
+    }
+
     return (
         <section className='post_detail'>
             <div className='container post-detail_container'>
-                <div className='post-detail_header' >
-                    <div className='post-details_buttons '>
-                        <Link to={`/posts/werwer/edit`} className='btn sm primary'> Edit </Link>
-                        <Link to={`/posts/id/delete`} className='btn sm danger'> Delete </Link>
-
-                    </div>
+                
+                <div className='post-detail_header'>
+                    <h2>{post.timestamp} - By Hari Preetham</h2>
+                    <p>{post.category}</p>
                 </div>
 
-                <h1 className='post-detail_title'>This is the post title</h1>
+                <h1 className='post-detail_title'>{post.title}</h1>
 
                 <div className='post-detail_thumbnail'>
-                    <img src={thumbnail} alt={'img'} />
+                    <img src={post.thumbnailUrl} alt={post.title} />
                 </div>
 
-                <p>
-                "But I must explain to you how all this mistaken idea 
-                of denouncing pleasure and praising pain was born and I
-                will give you a complete account of the system, and expound
-                 the actual teachings of the great explorer of the truth,
-                  the master-builder of human happiness. No one rejects, 
-                  dislikes, or avoids pleasure itself, because it is
-                   pleasure, but because those who do not know how to 
-                   pursue pleasure rationally encounter consequences 
-                   that are extremely painful. Nor again is there anyone
-                    who loves or pursues or desires to obtain pain of
-                     itself, because it is pain, but because occasionally
-                      circumstances occur in which toil and pain can 
-                      procure him some great pleasure. To take a trivial 
-                      example, which of us ever undertakes laborious 
-                      physical exercise, except to obtain some advantage 
-                      from it? But who has any right to find fault with 
-                      a man who chooses to enjoy a pleasure that has no
-                       annoying consequences, or one who avoids a pain
-                        that produces no resultant pleasure?"
-                    
-                </p>
+                <p>{post.description}</p>
 
-                <p>
-                "But I must explain to you how all this mistaken idea 
-                of denouncing pleasure and praising pain was born and I
-                will give you a complete account of the system, and expound
-                 the actual teachings of the great explorer of the truth,
-                  the master-builder of human happiness. No one rejects, 
-                  dislikes, or avoids pleasure itself, because it is
-                   pleasure, but because those who do not know how to 
-                   pursue pleasure rationally encounter consequences 
-                   that are extremely painful. Nor again is there anyone
-                    who loves or pursues or desires to obtain pain of
-                     itself, because it is pain, but because occasionally
-                      circumstances occur in which toil and pain can 
-                      procure him some great pleasure. To take a trivial 
-                      example, which of us ever undertakes laborious 
-                      physical exercise, except to obtain some advantage 
-                      from it? But who has any right to find fault with 
-                      a man who chooses to enjoy a pleasure that has no
-                       annoying consequences, or one who avoids a pain
-                        that produces no resultant pleasure?"
-                    
-                </p>
-
-                <p>
-                "But I must explain to you how all this mistaken idea 
-                of denouncing pleasure and praising pain was born and I
-                will give you a complete account of the system, and expound
-                 the actual teachings of the great explorer of the truth,
-                  the master-builder of human happiness. No one rejects, 
-                  dislikes, or avoids pleasure itself, because it is
-                   pleasure, but because those who do not know how to 
-                   pursue pleasure rationally encounter consequences 
-                   that are extremely painful. Nor again is there anyone
-                    who loves or pursues or desires to obtain pain of
-                     itself, because it is pain, but because occasionally
-                      circumstances occur in which toil and pain can 
-                      procure him some great pleasure. To take a trivial 
-                      example, which of us ever undertakes laborious 
-                      physical exercise, except to obtain some advantage 
-                      from it? But who has any right to find fault with 
-                      a man who chooses to enjoy a pleasure that has no
-                       annoying consequences, or one who avoids a pain
-                        that produces no resultant pleasure?"
-                    
-                </p>
-
-
-                <p>
-                "But I must explain to you how all this mistaken idea 
-                of denouncing pleasure and praising pain was born and I
-                will give you a complete account of the system, and expound
-                 the actual teachings of the great explorer of the truth,
-                  the master-builder of human happiness. No one rejects, 
-                  dislikes, or avoids pleasure itself, because it is
-                   pleasure, but because those who do not know how to 
-                   pursue pleasure rationally encounter consequences 
-                   that are extremely painful. Nor again is there anyone
-                    who loves or pursues or desires to obtain pain of
-                     itself, because it is pain, but because occasionally
-                      circumstances occur in which toil and pain can 
-                      procure him some great pleasure. To take a trivial 
-                      example, which of us ever undertakes laborious 
-                      physical exercise, except to obtain some advantage 
-                      from it? But who has any right to find fault with 
-                      a man who chooses to enjoy a pleasure that has no
-                       annoying consequences, or one who avoids a pain
-                        that produces no resultant pleasure?"
-                    
-                </p>
-
-                <p>
-                "But I must explain to you how all this mistaken idea 
-                of denouncing pleasure and praising pain was born and I
-                will give you a complete account of the system, and expound
-                 the actual teachings of the great explorer of the truth,
-                  the master-builder of human happiness. No one rejects, 
-                  dislikes, or avoids pleasure itself, because it is
-                   pleasure, but because those who do not know how to 
-                   pursue pleasure rationally encounter consequences 
-                   that are extremely painful. Nor again is there anyone
-                    who loves or pursues or desires to obtain pain of
-                     itself, because it is pain, but because occasionally
-                      circumstances occur in which toil and pain can 
-                      procure him some great pleasure. To take a trivial 
-                      example, which of us ever undertakes laborious 
-                      physical exercise, except to obtain some advantage 
-                      from it? But who has any right to find fault with 
-                      a man who chooses to enjoy a pleasure that has no
-                       annoying consequences, or one who avoids a pain
-                        that produces no resultant pleasure?"
-                    
-                </p>
+                {/* Render post content with HTML */}
+                <div className='post-detail_content' dangerouslySetInnerHTML={{ __html: post.postcontent }} />
             </div>
-
         </section>
-    )
+    );
 }
 
-export default PostDetail
+export default PostDetail;

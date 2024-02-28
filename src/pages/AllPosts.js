@@ -1,19 +1,37 @@
-import React from 'react'
-import Posts from '../Components/Posts'
-import PostsItem from '../Components/PostsItem'
+import React, { useState } from 'react';
+import PostsItem from '../Components/PostsItem';
 
 function AllPosts() {
-    return (
-        <section>
-            <div className='sorter'>
+  const [sortOption, setSortOption] = useState('relevance');
 
-            </div>
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value);
+  };
 
-            
-            <PostsItem/>
-        </section>
-        
-    )
+  return (
+    <section>
+      <div className=' container sorter'>
+        <label htmlFor="sortPosts">Sort by:</label>
+        <select id="sortPosts" value={sortOption} onChange={handleSortChange}>
+          <option value="relevance">Relevance</option>
+          <option value="latest">Latest</option>
+          <option value="oldest">Oldest</option>
+          <option value="Alphabetically(A-Z)">Alphabetically(A-Z)</option>
+          <option value="Alphabetically(Z-A)">Alphabetically(Z-A)</option>
+        </select>
+      </div>
+
+
+      <div>
+
+      <PostsItem sortOption={sortOption} />
+      
+      </div>
+      </section>
+
+
+
+  );
 }
 
-export default AllPosts
+export default AllPosts;
