@@ -47,6 +47,7 @@
     border: 0;
     outline: 0;
     box-sizing: border-box;
+    
 
 }
 
@@ -417,6 +418,8 @@ footer{
 .post-detail_header h2{
     font-size: medium;
     color: #0F0F0F;
+    cursor: default;
+    caret-color: transparent; 
 }
 
 

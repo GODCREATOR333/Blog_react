@@ -34,10 +34,10 @@ function PostDetail() {
     return (
         <section className='post_detail'>
             <div className='container post-detail_container'>
-                
+
                 <div className='post-detail_header'>
                     <h2>{post.timestamp} - By Hari Preetham</h2>
-                    <p>{post.category}</p>
+                    <p className='btn category'>{post.category}</p>
                 </div>
 
                 <h1 className='post-detail_title'>{post.title}</h1>
