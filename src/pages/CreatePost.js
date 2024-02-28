@@ -2,7 +2,7 @@ import React, { useState ,useEffect} from 'react';
 import ReactQuill from 'react-quill';
 import {v4} from 'uuid'
 import 'react-quill/dist/quill.snow.css';
-import { getDatabase, ref, push,serverTimestamp,set,get} from 'firebase/database';
+import { getDatabase, ref,set,get} from 'firebase/database';
 import app from '../firebase'
 import {  getStorage,ref as storageRef , uploadBytes,getDownloadURL} from "firebase/storage";
 
@@ -28,6 +28,14 @@ function CreatePost() {
         try {
             // Upload image
             const imageUrl = await uploadImage();
+            const timestamp = new Date().toISOString();
+            const dateObj = new Date(timestamp);
+
+            const year = dateObj.getFullYear();
+            const month = dateObj.getMonth() + 1; // Months are zero-based, so add 1
+            const date = dateObj.getDate();
+
+            const formattedDate = `${date}/${month}/${year}`;
 
             // Construct post data with image URL
             const postData = {
@@ -37,7 +45,7 @@ function CreatePost() {
                 postcontent,
                 thumbnail: thumbnail ? thumbnail.name : '',
                 thumbnailUrl: imageUrl, // Add image URL to post data
-                timestamp: serverTimestamp(),
+                timestamp: formattedDate,
             };
 
             // Save post data to real-time database

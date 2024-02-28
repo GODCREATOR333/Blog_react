@@ -1,6 +1,6 @@
 import React from 'react'
-import Latest_Posts from '../Components/Latest_Posts'
 import PostsItem from '../Components/PostsItem'
+import blog_img from '../assets/images/blog.png'
 
 function Home() {
     return (
@@ -42,6 +42,12 @@ function Home() {
 
 
             </section>
+
+            <div className='container recent_Posts'>
+                <h2> Recent Post </h2>
+                <img src={blog_img} alt='blog_img'/> 
+
+            </div>
 
             <PostsItem/>
             

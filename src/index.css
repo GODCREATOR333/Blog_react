@@ -254,11 +254,28 @@ footer{
 /* =============== HOME PAGE ================== */
 /* +++++++++++ Home Page - POSTS ++++++++++++++ */
 
+
+.recent_Posts{
+    display: flex;
+    flex-direction: row;
+    margin-top: 3rem;
+    margin-left: 8rem;
+    gap: 1.5rem;
+    text-decoration: underline;
+    align-items: center;
+
+}
+
+.recent_Posts img{
+    height: 3rem;
+    width: auto;
+}
+
 .post_container{
     display: grid;
     grid-template-columns: repeat(3,1fr);
     gap: 4rem;
-    margin-top: 8rem;
+    margin-top: 6rem;
 }
 
 .post{
@@ -274,10 +291,10 @@ footer{
     box-shadow: 0 1.5rem 2rem rbga(0,0,0,0.1);
 }
 
-.post thumbnail{
+.post_thumbnail{
     border-radius: var(--radius-3);
     overflow: hidden;
-    height: 16rem;
+    height: 25rem;
 
 }
 

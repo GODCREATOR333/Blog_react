@@ -18,7 +18,7 @@ function PostsItem() {
             ...data,
           }));
           setPosts(postsArray);
-          console.log(`Posts Array ${postsArray}`)
+          console.log(`Posts Array ${postsArray}`);
         } else {
           console.log("No data available");
         }
@@ -36,31 +36,42 @@ function PostsItem() {
 
   return (
     <div className=' container posts post_container'>
-      {posts.map(post => (
-        <article className="post" key={post.id}>
-          <div className="post_thumbnail">
-            <img src={post.thumbnailUrl} alt={post.title} />
-          </div>
+      {posts.map(post => {
+        // Shorten description to 30 characters and add "......" if longer
+        const shortDescription =
+          post.description.length > 250
+            ? post.description.slice(0, 250) + "......"
+            : post.description;
 
-          <div className="post_content">
-            <Link to={`/posts/${post.id}`}>
-              <h3>{post.title}</h3>
-            </Link>
-
-            <p>{post.description}</p>
-
-            <div className="time-stamp">
-              <h5>{`${post.timestamp} - by Hari Preetham`}</h5>
+        return (
+          <article className="post" key={post.id}>
+            <div className="post_thumbnail">
+              <img src={post.thumbnailUrl} alt={post.title} />
             </div>
 
-            <div className="post_footer">
-              <Link to={`/post/categories/${post.category}`} className="btn category">
-                {post.category}
+            <div className="post_content">
+              <Link to={`/posts/${post.id}`}>
+                <h3>{post.title}</h3>
               </Link>
+
+              <p>{shortDescription}</p>
+
+              <div className="time-stamp">
+                <h5>{`${post.timestamp} - by Hari Preetham`}</h5>
+              </div>
+
+              <div className="post_footer">
+                <Link
+                  to={`/post/categories/${post.category}`}
+                  className="btn category"
+                >
+                  {post.category}
+                </Link>
+              </div>
             </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        );
+      })}
     </div>
   );
 }
