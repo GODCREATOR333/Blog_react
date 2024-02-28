@@ -1,5 +1,6 @@
 import React from 'react'
 import PostsItem from '../Components/PostsItem'
+import Latest_Posts from '../Components/Latest_Posts'
 import blog_img from '../assets/images/blog.png'
 
 function Home() {
@@ -49,7 +50,7 @@ function Home() {
 
             </div>
 
-            <PostsItem/>
+            <Latest_Posts/>
             
         </div>
     )

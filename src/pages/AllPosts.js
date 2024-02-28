@@ -1,5 +1,6 @@
 import React from 'react'
 import Posts from '../Components/Posts'
+import PostsItem from '../Components/PostsItem'
 
 function AllPosts() {
     return (
@@ -9,7 +10,7 @@ function AllPosts() {
             </div>
 
             
-            <Posts/>
+            <PostsItem/>
         </section>
         
     )

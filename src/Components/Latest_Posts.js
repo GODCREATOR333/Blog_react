@@ -1,29 +1,80 @@
-// for home page render getting the latest posts 
-
-import React, { useState } from 'react'
-import { Post_data } from '../Post_data'
-import PostsItem from './PostsItem'
-
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { getDatabase, ref, get,query, orderByKey, limitToLast } from 'firebase/database';
+import app from '../firebase';
 
 function Latest_Posts() {
-    const [post, setPost] = useState(Post_data)
+  const [posts, setPosts] = useState([]);
 
-    const sortedPosts = Post_data.sort((a, b) => b.id - a.id);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const db = getDatabase();
+        const postRef = ref(db, 'posts');
+        const postQuery = query(postRef, orderByKey(), limitToLast(5)); // Query to get last 5 posts
+        const snapshot = await get(postQuery);
+        
+        if (snapshot.exists()) {
+          const postsArray = Object.entries(snapshot.val()).reverse().map(([id, data]) => ({ // Reverse the array to get latest posts first
+            id,
+            ...data,
+          }));
+          setPosts(postsArray);
+        } else {
+          console.log("No data available");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-    // Select only the first 5 posts
-    const latestPosts = sortedPosts.slice(0, 5);
+    fetchData();
+  }, []);
 
+  if (posts.length === 0) {
+    return null; // or render a loading indicator
+  }
 
-    return (
-        <section className='posts'>
-            <div className='container post_container'>
-                {
-                    latestPosts.map(({ id, thumbnail, category, title, desc }) => <PostsItem key={id} postID={id}
-                        thumbnail={thumbnail} category={category} title={title} description={desc} />)
-                }
+  return (
+    <div className=' container posts post_container'>
+      {posts.map(post => {
+        // Shorten description to 30 characters and add "......" if longer
+        const shortDescription =
+          post.description.length > 250
+            ? post.description.slice(0, 250) + "......"
+            : post.description;
+
+        return (
+          <article className="post" key={post.id}>
+            <div className="post_thumbnail">
+              <img src={post.thumbnailUrl} alt={post.title} />
             </div>
-        </section>
-    )
+
+            <div className="post_content">
+              <Link to={`/posts/${post.id}`}>
+                <h3>{post.title}</h3>
+              </Link>
+
+              <p>{shortDescription}</p>
+
+              <div className="time-stamp">
+                <h5>{`${post.timestamp} - by Hari Preetham`}</h5>
+              </div>
+
+              <div className="post_footer">
+                <Link
+                  to={`/post/categories/${post.category}`}
+                  className="btn category"
+                >
+                  {post.category}
+                </Link>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  );
 }
 
-export default Latest_Posts
+export default Latest_Posts;
