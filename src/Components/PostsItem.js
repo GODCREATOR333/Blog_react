@@ -3,71 +3,64 @@ import { Link } from 'react-router-dom';
 import { getDatabase, ref, get } from 'firebase/database';
 import app from '../firebase';
 
-function PostsItem({ postID }) {
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
+function PostsItem() {
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    const fetchPost = async () => {
+    const fetchData = async () => {
       try {
-        const db = getDatabase(app);
-        const postRef = ref(db, `posts/${postID}`);
-        const postSnapshot = await get(postRef);
-
-        if (postSnapshot.exists()) {
-          setPost(postSnapshot.val());
+        const db = getDatabase();
+        const postRef = ref(db, 'posts');
+        const snapshot = await get(postRef);
+        if (snapshot.exists()) {
+          const postsArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+          setPosts(postsArray);
+          console.log(`Posts Array ${postsArray}`)
         } else {
-          console.log('No data available for postID:', postID);
+          console.log("No data available");
         }
-        setLoading(false);
       } catch (error) {
-        console.error('Error fetching post:', error);
-        setLoading(false);
+        console.log(error);
       }
     };
 
-    fetchPost();
-  }, [postID]);
+    fetchData();
+  }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
+  if (posts.length === 0) {
+    return null; // or render a loading indicator
   }
-
-  if (!post) {
-    return null;
-  }
-
-  const { thumbnailUrl, category, title, description, timestamp } = post;
-
-  const shortDescription =
-    description.length > 150 ? description.substring(0, 150) + '...' : description;
-  const shortTitle = title.length > 30 ? title.substring(0, 30) + '...' : title;
 
   return (
-    <div>
-      <article className="post">
-        <div className="post_thumbnail">
-          <img src={thumbnailUrl} alt={title} />
-        </div>
-
-        <div className="post_content">
-          <Link to={`/posts/${postID}`}>
-            <h3>{shortTitle}</h3>
-          </Link>
-
-          <p>{shortDescription}</p>
-
-          <div className="time-stamp">
-            <h5>{`${timestamp} - by Hari Preetham`}</h5>
+    <div className=' container posts post_container'>
+      {posts.map(post => (
+        <article className="post" key={post.id}>
+          <div className="post_thumbnail">
+            <img src={post.thumbnailUrl} alt={post.title} />
           </div>
 
-          <div className="post_footer">
-            <Link to={`/post/categories/${category}`} className="btn category">
-              {category}
+          <div className="post_content">
+            <Link to={`/posts/${post.id}`}>
+              <h3>{post.title}</h3>
             </Link>
+
+            <p>{post.description}</p>
+
+            <div className="time-stamp">
+              <h5>{`${post.timestamp} - by Hari Preetham`}</h5>
+            </div>
+
+            <div className="post_footer">
+              <Link to={`/post/categories/${post.category}`} className="btn category">
+                {post.category}
+              </Link>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
+      ))}
     </div>
   );
 }

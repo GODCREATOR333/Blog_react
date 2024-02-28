@@ -1,5 +1,6 @@
 import React from 'react'
 import Latest_Posts from '../Components/Latest_Posts'
+import PostsItem from '../Components/PostsItem'
 
 function Home() {
     return (
@@ -42,10 +43,8 @@ function Home() {
 
             </section>
 
-
-
-
-            <Latest_Posts />
+            <PostsItem/>
+            
         </div>
     )
 }
