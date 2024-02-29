@@ -422,6 +422,9 @@ footer{
     caret-color: transparent; 
 }
 
+.post-by-category{
+    margin-bottom: 18rem;
+}
 
 
 /* ============== Register & Login ================ */
@@ -925,6 +928,13 @@ input, select, textarea{
         padding: 0;
     }
 
+    .post_thumbnail{
+        border-radius: var(--radius-3);
+        overflow: hidden;
+        height: 13rem;
+    
+    }
+
 
     .register, .login ,.create-post{
         width: 100%;
@@ -933,6 +943,11 @@ input, select, textarea{
 
     .post_detail h1 {
         margin-top: 1rem;
+    }
+
+    .post_detail h1,h2,p {
+        margin-top: 1rem;
+        color: #ccc;
     }
     
     
@@ -949,6 +964,7 @@ input, select, textarea{
 
     .dashboard_info{
         gap: 1.5rem;
+
     }
 
     .dashboard_thumbnail{

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getDatabase, ref, get } from 'firebase/database';
 import app from '../firebase';
 
-function PostsItem({ sortOption }) {
+function PostsItem({ sortOption}) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -21,9 +21,9 @@ function PostsItem({ sortOption }) {
           // Sort posts based on the selected option
           let sortedPosts = [...postsArray];
           if (sortOption === 'latest') {
-            sortedPosts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            sortedPosts.sort((a, b) => b.timestamp.toDate() - a.timestamp.toDate());
           } else if (sortOption === 'oldest') {
-            sortedPosts.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+            sortedPosts.sort((a, b) => a.timestamp.toDate() - b.timestamp.toDate());
           } else if (sortOption === 'Alphabetically(A-Z)') {
             sortedPosts.sort((a, b) => a.title.localeCompare(b.title));
           } else if (sortOption === 'Alphabetically(Z-A)') {
@@ -74,7 +74,7 @@ function PostsItem({ sortOption }) {
 
               <div className="post_footer">
                 <Link
-                  to={`/post/categories/${post.category}`}
+                  to={`/posts/categories/${post.category}`}
                   className="btn category"
                 >
                   {post.category}

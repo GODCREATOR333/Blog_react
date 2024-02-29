@@ -14,6 +14,7 @@ import Contact from './pages/Contact'
 import AllPosts from './pages/AllPosts'
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import PostsByCategory from "./Components/PostsByCategory"; // Import the component for displaying posts by category
 
 
 const router = createBrowserRouter([
@@ -31,8 +32,8 @@ const router = createBrowserRouter([
       { path: "contact", element: <Contact /> },
       { path: "allposts", element: <AllPosts /> },
       { path: "register", element: <Register /> },
-      { path: "dashboard", element: <Dashboard /> }
-
+      { path: "dashboard", element: <Dashboard /> },
+      { path: "posts/categories/:category", element: <PostsByCategory /> }
     ]
   }
 ])

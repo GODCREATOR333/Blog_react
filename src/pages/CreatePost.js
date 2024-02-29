@@ -2,7 +2,7 @@ import React, { useState ,useEffect} from 'react';
 import ReactQuill from 'react-quill';
 import {v4} from 'uuid'
 import 'react-quill/dist/quill.snow.css';
-import { getDatabase, ref,set,get} from 'firebase/database';
+import { getDatabase, ref,set,get,push} from 'firebase/database';
 import app from '../firebase'
 import {  getStorage,ref as storageRef , uploadBytes,getDownloadURL} from "firebase/storage";
 
@@ -82,21 +82,18 @@ function CreatePost() {
     const savePostData = async (postData) => {
         const db = getDatabase(app);
     
-        // Get a reference to the 'posts' node
-        const postsRef = ref(db, 'posts');
+        try {
+            // Get a reference to the 'posts' node
+            const postsRef = ref(db, 'posts');
     
-        // Get a snapshot of the current posts
-        const postsSnapshot = await get(postsRef);
-    
-        // Calculate the count of posts
-        let count = 1; // Start from 1 if there are no posts
-        if (postsSnapshot.exists()) {
-            count = Object.keys(postsSnapshot.val()).length + 1; // Count existing posts
+            // Push the post data to generate a unique ID
+            await push(postsRef, postData);
+        } catch (error) {
+            console.error('Error saving post data:', error);
+            throw error;
         }
-    
-        // Set the post data under the specific postID node
-        await set(ref(db, `posts/${count}`), postData);
     };
+    
     
     
 

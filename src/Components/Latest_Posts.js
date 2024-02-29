@@ -63,7 +63,7 @@ function Latest_Posts() {
 
               <div className="post_footer">
                 <Link
-                  to={`/post/categories/${post.category}`}
+                  to={`/posts/categories/${post.category}`}
                   className="btn category"
                 >
                   {post.category}
